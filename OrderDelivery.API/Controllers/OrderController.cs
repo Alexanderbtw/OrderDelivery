@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using OrderDelivery.Application.Commands;
 using OrderDelivery.Application.DTOs;
 using OrderDelivery.Application.Queries;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace OrderDelivery.API.Controllers
 {
