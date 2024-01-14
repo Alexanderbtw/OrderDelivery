@@ -31,28 +31,35 @@ namespace OrderDelivery.DAL.Migrations
                     b.Property<DateOnly>("CollectionDate")
                         .HasColumnType("date");
 
-                    b.Property<string>("ReceiverAdress")
+                    b.Property<string>("ReceiverAddress")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
 
                     b.Property<string>("ReceiverCity")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
-                    b.Property<string>("SenderAdress")
+                    b.Property<string>("SenderAddress")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
 
                     b.Property<string>("SenderCity")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<decimal>("Weight")
                         .HasColumnType("numeric");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", t =>
+                        {
+                            t.HasCheckConstraint("ValidWeight", "Weight > 0");
+                        });
                 });
 #pragma warning restore 612, 618
         }

@@ -5,6 +5,11 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8085
+      - DB_DATABASE=orderdelivery
+      - DB_USERNAME=ps_user
+      - DB_PASSWORD=ps_pass
+      - DB_HOST=db
+      - DB_PORT=5432
     ports:
       - 8085:8085
     volumes:
@@ -13,9 +18,9 @@ services:
 
   db:
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=my_secret_pass
-      - POSTGRES_DB=OrderDelivery
+      - POSTGRES_USER=ps_user
+      - POSTGRES_PASSWORD=ps_pass
+      - POSTGRES_DB=orderdelivery
     ports:
        - 5432:5432
 

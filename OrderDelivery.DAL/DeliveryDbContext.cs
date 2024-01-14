@@ -8,8 +8,6 @@ namespace OrderDelivery.DAL
     {
         public DbSet<Order> Orders { get; set; }
 
-        public DeliveryDbContext() { }
-
         public DeliveryDbContext(DbContextOptions<DeliveryDbContext> options) : base(options)
         {
             Database.Migrate();

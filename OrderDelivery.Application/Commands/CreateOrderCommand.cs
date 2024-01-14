@@ -9,13 +9,13 @@ namespace OrderDelivery.Application.Commands
         public string SenderCity { get; set; }
 
         [StringLength(250, MinimumLength = 1)] 
-        public string SenderAdress { get; set; }
+        public string SenderAddress { get; set; }
 
         [StringLength(50, MinimumLength = 1)] 
         public string ReceiverCity { get; set; }
 
         [StringLength(250, MinimumLength = 1)] 
-        public string ReceiverAdress { get; set; }
+        public string ReceiverAddress { get; set; }
 
         [Range(0, UInt16.MaxValue)] 
         public decimal Weight { get; set; }

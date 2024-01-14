@@ -10,11 +10,8 @@ namespace OrderDelivery.DAL.Configurations
         {
             builder.Property(o => o.SenderCity).HasMaxLength(50);
             builder.Property(o => o.ReceiverCity).HasMaxLength(50);
-            builder.Property(o => o.SenderAdress).HasMaxLength(250);
-            builder.Property(o => o.ReceiverAdress).HasMaxLength(250);
-            builder.ToTable(t => {
-                t.HasCheckConstraint("ValidWeight", "Weight > 0");
-            });
+            builder.Property(o => o.SenderAddress).HasMaxLength(250);
+            builder.Property(o => o.ReceiverAddress).HasMaxLength(250);
         }
     }
 }

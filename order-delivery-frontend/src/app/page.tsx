@@ -1,9 +1,12 @@
-import styles from './page.module.css'
+
+import Divider from 'antd/es/divider'
+import { OrderIndex } from './components/OrderIndex/orderIndex'
 
 export default function Home() {
   return (
     <main>
-      <h1>Welcome</h1>
+      <Divider orientation={"center"}>Orders List</Divider>
+      <OrderIndex/>
     </main>
   )
 }

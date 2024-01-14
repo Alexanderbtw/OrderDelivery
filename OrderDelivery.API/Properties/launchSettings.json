@@ -6,7 +6,11 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ConnectionString": "User ID=postgres;Password=Samara2752777;Host=localhost;Port=5432;Database=OrderDelivery;"
+        "DB_DATABASE": "orderdelivery",
+        "DB_USERNAME": "ps_user",
+        "DB_PASSWORD": "ps_pass",
+        "DB_HOST": "localhost",
+        "DB_PORT": "5432"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5170"
@@ -16,8 +20,7 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "ConnectionString": "User ID=postgres;Password=Samara2752777;Host=localhost;Port=5432;Database=OrderDelivery;"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7030;http://localhost:5170"
@@ -27,8 +30,7 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "ConnectionString": "User ID=postgres;Password=Samara2752777;Host=localhost;Port=5432;Database=OrderDelivery;"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "Docker": {
@@ -36,8 +38,7 @@
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
       "environmentVariables": {
-        "ASPNETCORE_HTTP_PORTS": "8085",
-        "ConnectionString": "User ID=postgres;Password=my_secret_pass;Host=db;Port=5432;Database=OrderDelivery;"
+        "ASPNETCORE_HTTP_PORTS": "8085"
       },
       "publishAllPorts": true,
       "useSSL": true

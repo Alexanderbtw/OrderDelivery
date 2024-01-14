@@ -20,12 +20,13 @@ services:
     container_name: db
     image: postgres:16.0-alpine3.18
     volumes:
-      - delivery-data:/var/lib/postgresql/data
+      - ./delivery-data:/var/lib/postgresql/data
     networks:
       - delivery-net
 
   adminer:
     container_name: adminer
+    restart: always
     image: adminer
     networks:
       - delivery-net

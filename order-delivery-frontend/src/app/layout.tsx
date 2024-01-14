@@ -4,6 +4,8 @@ import "./globals.css";
 import { Layout, Menu } from "antd";
 import { Content, Footer, Header } from "antd/es/layout/layout";
 import Link from "next/link";
+import { MenuItemType } from "antd/es/menu/hooks/useItems";
+import { MailOutlined, PlusCircleOutlined } from "@ant-design/icons";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,15 +14,17 @@ export const metadata: Metadata = {
   description: "Test task",
 };
 
-const items = [
+const items: MenuItemType[] = [
   {
     key: "orders",
+    icon: <MailOutlined />,
     label: <Link href={"/"}>Orders</Link>
   },
   {
     key: "create",
-    label: <Link href={"/create"}>Create</Link>
-  },
+    icon: <PlusCircleOutlined />,
+    label: <Link href={"/order/create"}>Create</Link>
+  }
 ]
 
 export default function RootLayout({
@@ -36,7 +40,6 @@ export default function RootLayout({
             <Menu
               theme="dark"
               mode="horizontal"
-              defaultSelectedKeys={["2"]}
               items={items}
               style={{ flex: 1, minWidth: 0 }}
             />
@@ -47,9 +50,14 @@ export default function RootLayout({
             {children}
           </Content>
           <Footer
-            style={{textAlign: "center"}}
+            style={{
+              textAlign: "center",
+              color: "gray"
+            }}
           >
-            Order Delivery 2024 Created by Alexander Goldebaev
+            Order Delivery
+            <br/>
+            &copy; Alexander Goldebaev, 2024
           </Footer>
         </Layout>
       </body>
