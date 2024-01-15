@@ -1,3 +1,4 @@
+"use client";
 
 import Divider from 'antd/es/divider'
 import { OrderIndex } from './components/OrderIndex/orderIndex'

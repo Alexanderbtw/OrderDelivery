@@ -1,4 +1,6 @@
-﻿import { OrderRead } from "@/app/components/OrderRead/orderRead";
+﻿"use client";
+
+import { OrderRead } from "@/app/components/OrderRead/orderRead";
 import { RollbackOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import Divider from "antd/es/divider";

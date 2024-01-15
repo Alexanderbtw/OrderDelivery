@@ -6,6 +6,8 @@ import { Content, Footer, Header } from "antd/es/layout/layout";
 import Link from "next/link";
 import { MenuItemType } from "antd/es/menu/hooks/useItems";
 import { MailOutlined, PlusCircleOutlined } from "@ant-design/icons";
+import { ErrorBoundary } from "next/dist/client/components/error-boundary";
+import GlobalError from "./global-error";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,6 +36,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <ErrorBoundary errorComponent={GlobalError}>
       <body className={inter.className}>
         <Layout style={{ minHeight: "100dvh" }}>
           <Header>
@@ -42,12 +45,15 @@ export default function RootLayout({
               mode="horizontal"
               items={items}
               style={{ flex: 1, minWidth: 0 }}
+              selectable={false}
             />
           </Header>
           <Content
             style={{ padding: "0 48px" }}
           >
-            {children}
+            <ErrorBoundary errorComponent={GlobalError}>
+              {children}
+            </ErrorBoundary>
           </Content>
           <Footer
             style={{
@@ -61,6 +67,7 @@ export default function RootLayout({
           </Footer>
         </Layout>
       </body>
+      </ErrorBoundary>
     </html>
   );
 }

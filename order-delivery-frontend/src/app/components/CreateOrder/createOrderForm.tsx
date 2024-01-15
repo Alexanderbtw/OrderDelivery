@@ -1,10 +1,13 @@
-﻿import { CreateOrderCommand, createOrder } from "@/app/services/orders";
-import { Button, Form } from "antd";
+﻿"use client";
+
+import { CreateOrderCommand, CreateOrderInfo, createOrder } from "@/app/services/orders";
+import { Button, Form, Progress } from "antd";
 import { Dispatch, FunctionComponent, SetStateAction, useState } from "react";
 import { SenderStep } from "./senderStep";
 import { ReceiverStep } from "./receiverStep";
 import { ParametersStep } from "./parametersStep";
 import { CheckCircleOutlined, LeftCircleOutlined, RightCircleOutlined } from "@ant-design/icons";
+import { useRouter } from "next/navigation";
 
 export interface FormDataProps {
   orderData: CreateOrderCommand,
@@ -13,7 +16,7 @@ export interface FormDataProps {
 
 export const CreateOrderForm: FunctionComponent = () => {
   const [page, setPage] = useState<number>(0);
-  const [isLoading, setLoading] = useState(false);
+  const [createError, setError] = useState<unknown>();
   const [orderData, setOrderData] = useState<CreateOrderCommand>({
     receiverAddress: "",
     receiverCity: "",
@@ -38,19 +41,23 @@ export const CreateOrderForm: FunctionComponent = () => {
     }
   };
 
+  const router = useRouter();
+
   async function handleSubmit() {
+    setPage(prev => prev + 1);
     if (page === FormTitles.length - 1) {
-      setLoading(true);
-      const res = await createOrder(orderData);
-      setPage(0);
-      setLoading(false);
-    } else {
-      setPage(page + 1);
+      const res: CreateOrderInfo = await createOrder(orderData);
+      if (res.orderId) {
+        router.push('/order/read/' + res.orderId);
+      }
+      else if (res.error) {
+        setError(res.error);
+      }
     }
   }
 
-  if (isLoading){
-    return <h1>Porno</h1>
+  if (createError) {
+    throw createError;
   }
 
   return (
@@ -69,12 +76,16 @@ export const CreateOrderForm: FunctionComponent = () => {
         layout="vertical"
       >
         <h3 style={{marginBottom: "15px"}}>{FormTitles[page]}</h3>
+        <Progress
+          percent={(page + 1) * 33}
+        />
+
         {formDisplay()}
 
         <Button
           danger
           disabled={page === 0}
-          onClick={() => setPage(page - 1)}
+          onClick={() => setPage(prev => prev - 1)}
         >
           <LeftCircleOutlined />
         </Button>
@@ -83,7 +94,7 @@ export const CreateOrderForm: FunctionComponent = () => {
           htmlType="submit"
           style={{float: "right"}}
         >
-          {page === FormTitles.length - 1
+          {page >= FormTitles.length - 1
           ? <CheckCircleOutlined />
           : <RightCircleOutlined />}
         </Button>

@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { getAllOrders } from "@/app/services/orders";
+import { GetOrders, getAllOrders } from "@/app/services/orders";
 import { Table } from "antd";
 import { useRouter } from "next/navigation";
 import { FunctionComponent, useEffect, useState } from "react";
@@ -51,21 +51,26 @@ const colsInfo = [
 ];
 
 export const OrderIndex:FunctionComponent = ({}) => {
-  const [ordersInfo, setOrders] = useState<Order[]>([]);
+  const [ordersInfo, setOrders] = useState<GetOrders>({});
   const [isLoading, setLoading] = useState<boolean>(true);
 
   const router = useRouter();
 
   useEffect(() => {
-    getAllOrders().then((orders) => {
-      setOrders(orders);
-      setLoading(false);
-    });
+    getAllOrders()
+      .then((orders: GetOrders) => {
+        setOrders(orders);
+        setLoading(false);
+      })
   }, []);
+
+  if (ordersInfo?.error) {
+    throw ordersInfo.error;
+  }
 
   return (
     <Table
-      dataSource={ordersInfo.map(item => ({...item, key: item.id}))}
+      dataSource={ordersInfo.data ? ordersInfo.data.map(item => ({...item, key: item.id})) : []}
       columns={colsInfo}
       loading={isLoading}
       onRow={(record) => {

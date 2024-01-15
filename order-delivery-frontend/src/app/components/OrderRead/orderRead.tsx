@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { getSingleOrder } from "@/app/services/orders";
+import { GetOrder, getSingleOrder } from "@/app/services/orders";
 import { Descriptions, Spin } from "antd";
 import { FunctionComponent, useEffect, useState } from "react";
 
@@ -11,14 +11,15 @@ interface Props {
 export const OrderRead : FunctionComponent<Props> = ({
   orderId
 }) => {
+  const [orderInfo, setOrder] = useState<GetOrder>({});
   const [isLoading, setLoading] = useState(true);
-  const [orderInfo, setOrder] = useState<Order>();
 
   useEffect(() => {
-    getSingleOrder(orderId).then((order) => {
-      setOrder(order);
-      setLoading(false);
-    });
+    getSingleOrder(orderId)
+      .then((order: GetOrder) => {
+        setOrder(order);
+        setLoading(false);
+      });
   }, [orderId]);
 
   if (isLoading){
@@ -29,8 +30,12 @@ export const OrderRead : FunctionComponent<Props> = ({
     );
   }
 
-  const descItems = Object.keys(orderInfo!).map(key => {
-    let value = orderInfo![key as keyof Order].toString();
+  if (orderInfo?.error) {
+    throw orderInfo.error;
+  }
+
+  const descItems = Object.keys(orderInfo.data!).map(key => {
+    let value = orderInfo.data![key as keyof Order].toString();
 
     if (key == 'weight') {
       value += " Kg"

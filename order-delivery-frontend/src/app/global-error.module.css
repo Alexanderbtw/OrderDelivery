@@ -1,0 +1,43 @@
+﻿.main {
+    display: grid;
+    align-items: center;
+    padding-top: 25svh;
+}
+
+.article {
+    color: red;
+    font-weight: 600;
+    margin-top: 40px;
+    font-size: large;
+}
+
+.text {
+    font-size: xxx-large;
+    font-weight: bold;
+    white-space: pre-line;
+}
+
+.smalltext {
+    padding-left: 20dvw;
+    font-weight: normal;
+    text-align: left;
+    font-size: medium;
+    font-style: italic;
+    line-height: 1.5;
+    white-space: pre-line;
+}
+
+.advice {
+    margin-top: 20px;
+    font-size: x-large;
+}
+
+.buttons {
+    padding-top: 40px;
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
