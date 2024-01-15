@@ -1,0 +1,75 @@
+﻿version: '3.9'
+
+networks:
+  delivery-net:
+     driver: bridge
+
+services:
+  api:
+    container_name: api
+    image: borntowhine/order_delivery_api
+    networks:
+      - delivery-net
+    depends_on:
+      - db
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8085
+      - DB_DATABASE=orderdelivery
+      - DB_USERNAME=ps_user
+      - DB_PASSWORD=ps_pass
+      - DB_HOST=db
+      - DB_PORT=5432
+    ports:
+      - 8085:8085
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
+
+  app:
+    container_name: app
+    image: borntowhine/order_delivery_app
+    networks:
+      - delivery-net
+    depends_on:
+      - proxy
+    ports:
+      - 3000:3000
+
+  proxy:
+    container_name: proxy
+    image: borntowhine/order_delivery_proxy
+    networks:
+      - delivery-net
+    depends_on:
+      - api
+    ports:
+      - 5142:8085
+
+  db:
+    container_name: db
+    image: postgres:16.0-alpine3.18
+    volumes:
+      - ./delivery-data:/var/lib/postgresql/data
+    networks:
+      - delivery-net
+    environment:
+      - POSTGRES_USER=ps_user
+      - POSTGRES_PASSWORD=ps_pass
+      - POSTGRES_DB=orderdelivery
+    ports:
+      - 5432:5432
+
+  adminer:
+    container_name: adminer
+    image: adminer
+    networks:
+      - delivery-net
+    depends_on:
+      - db
+    ports:
+      - 8080:8080
+
+volumes:
+  delivery-data:
