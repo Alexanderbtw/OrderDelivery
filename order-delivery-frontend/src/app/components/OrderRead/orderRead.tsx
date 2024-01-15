@@ -12,7 +12,7 @@ export const OrderRead : FunctionComponent<Props> = ({
   orderId
 }) => {
   const [orderInfo, setOrder] = useState<GetOrder>({});
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     getSingleOrder(orderId)

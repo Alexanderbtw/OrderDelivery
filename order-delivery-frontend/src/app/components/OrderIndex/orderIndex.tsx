@@ -3,7 +3,7 @@
 import { GetOrders, getAllOrders } from "@/app/services/orders";
 import { Table } from "antd";
 import { useRouter } from "next/navigation";
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useEffect, useRef, useState } from "react";
 
 const colsInfo = [
   {
@@ -52,7 +52,7 @@ const colsInfo = [
 
 export const OrderIndex:FunctionComponent = ({}) => {
   const [ordersInfo, setOrders] = useState<GetOrders>({});
-  const [isLoading, setLoading] = useState<boolean>(true);
+  const isLoading = useRef<boolean>(true);
 
   const router = useRouter();
 
@@ -60,7 +60,7 @@ export const OrderIndex:FunctionComponent = ({}) => {
     getAllOrders()
       .then((orders: GetOrders) => {
         setOrders(orders);
-        setLoading(false);
+        isLoading.current = false;
       })
   }, []);
 
@@ -72,7 +72,7 @@ export const OrderIndex:FunctionComponent = ({}) => {
     <Table
       dataSource={ordersInfo.data ? ordersInfo.data.map(item => ({...item, key: item.id})) : []}
       columns={colsInfo}
-      loading={isLoading}
+      loading={isLoading.current}
       onRow={(record) => {
         return {
             onClick: () => router.push('/order/read/' + record.id)

@@ -1,4 +1,4 @@
-﻿const BASE_URL = 'http://localhost:5170/api/';
+﻿const BASE_URL = 'http://localhost:8085/api/';
 
 export interface CreateOrderCommand {
     senderCity: string,

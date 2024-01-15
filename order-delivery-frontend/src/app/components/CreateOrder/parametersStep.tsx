@@ -4,8 +4,13 @@ import { DatePicker, Form, InputNumber } from 'antd'
 
 export const ParametersStep:FunctionComponent<FormDataProps> = ({
   orderData,
-  setOrderData
+  setOrderData,
+  currentPage
 }) => {
+  if (currentPage < 2) {
+    return null;
+  }
+
   return (
     <Fragment>
       <Form.Item

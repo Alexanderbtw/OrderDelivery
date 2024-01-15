@@ -11,8 +11,15 @@ import { useRouter } from "next/navigation";
 
 export interface FormDataProps {
   orderData: CreateOrderCommand,
-  setOrderData: Dispatch<SetStateAction<CreateOrderCommand>>
+  setOrderData: Dispatch<SetStateAction<CreateOrderCommand>>,
+  currentPage: number,
 }
+
+const FormTitles = [
+  "About Sender",
+  "About Receiver",
+  "Additional Information",
+];
 
 export const CreateOrderForm: FunctionComponent = () => {
   const [page, setPage] = useState<number>(0);
@@ -25,22 +32,6 @@ export const CreateOrderForm: FunctionComponent = () => {
     weight: 0,
     collectionDate: "",
   });
-  const FormTitles = [
-    "About Sender",
-    "About Receiver",
-    "Additional Information",
-  ];
-
-  function formDisplay() {
-    if (page === 0) {
-      return <SenderStep orderData={orderData} setOrderData={setOrderData} />;
-    } else if (page === 1) {
-      return <ReceiverStep orderData={orderData} setOrderData={setOrderData} />;
-    } else {
-      return <ParametersStep orderData={orderData} setOrderData={setOrderData} />
-    }
-  };
-
   const router = useRouter();
 
   async function handleSubmit() {
@@ -71,7 +62,7 @@ export const CreateOrderForm: FunctionComponent = () => {
       }}
     >
       <Form
-        autoComplete="false"
+        autoComplete="true"
         onFinish={handleSubmit}
         layout="vertical"
       >
@@ -80,7 +71,9 @@ export const CreateOrderForm: FunctionComponent = () => {
           percent={(page + 1) * 33}
         />
 
-        {formDisplay()}
+        <SenderStep orderData={orderData} setOrderData={setOrderData} currentPage={page} />
+        <ReceiverStep orderData={orderData} setOrderData={setOrderData} currentPage={page} />
+        <ParametersStep orderData={orderData} setOrderData={setOrderData} currentPage={page} />
 
         <Button
           danger

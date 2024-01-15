@@ -5,7 +5,7 @@ networks:
      driver: bridge
 
 services:
-  orderdelivery.api:
+  api:
     container_name: api
     image: borntowhine/order_delivery_api
     build:
@@ -15,6 +15,28 @@ services:
       - delivery-net
     depends_on:
       - db
+   
+  app:
+    container_name: app
+    image: borntowhine/order_delivery_app
+    build:
+      context: order-delivery-frontend/
+      dockerfile: Dockerfile
+    networks:
+      - delivery-net
+    depends_on:
+      - proxy
+
+  proxy:
+    container_name: proxy
+    image: borntowhine/order_delivery_proxy
+    build:
+      context: order_delivery.proxy/
+      dockerfile: Dockerfile
+    networks:
+      - delivery-net
+    depends_on:
+      - api
 
   db:
     container_name: db
@@ -26,7 +48,6 @@ services:
 
   adminer:
     container_name: adminer
-    restart: always
     image: adminer
     networks:
       - delivery-net

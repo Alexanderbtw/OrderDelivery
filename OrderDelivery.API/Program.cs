@@ -39,7 +39,7 @@ app.MapControllers();
 app.UseCors(policyBuilder =>
 {
     policyBuilder.AllowAnyHeader();
-    policyBuilder.WithOrigins("http://localhost:3000");
+    policyBuilder.WithOrigins("http://localhost:3000", "http://app:3000");
     policyBuilder.AllowAnyMethod();
 });
 

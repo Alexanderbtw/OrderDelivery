@@ -7,7 +7,7 @@ export default function CreatePage() {
   return (
     <main>
       <Divider orientation={"center"}>Create Order</Divider>
-      <CreateOrderForm />
+      <CreateOrderForm/>
     </main>
   );
 }

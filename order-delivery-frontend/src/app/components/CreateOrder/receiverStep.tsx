@@ -4,12 +4,17 @@ import { Form, Input } from 'antd'
 
 export const ReceiverStep: FunctionComponent<FormDataProps> = ({
   orderData,
-  setOrderData
+  setOrderData,
+  currentPage
 }) => {
+  if (currentPage !== 1) {
+    return null;
+  }
+
   return (
     <Fragment>
       <Form.Item
-      label="Receiver City"
+      label="City"
       name="receiverCity"
       hasFeedback
       rules={[{ required: true, message: 'Please input recepient city!' }]}
@@ -24,7 +29,7 @@ export const ReceiverStep: FunctionComponent<FormDataProps> = ({
       </Form.Item>
 
       <Form.Item
-        label="Receiver Address"
+        label="Address"
         name="receiverAddress"
         hasFeedback
         rules={[{ required: true, message: 'Please input recepient address!' }]}
