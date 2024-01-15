@@ -10,10 +10,10 @@ docker-compose up
 1. Download this proj
 2. Change database connection configuration in launchSettings.json
 3. Start **OrderDelivery.API in http** profile
-4. Start **order-delivery-frontend**:
-```
-npm run build
-npm run start
-```
+4. Start **order-delivery-frontend** with:
+  ```
+  npm run build
+  npm run start
+  ```
 
 # :whale2: My Docker-Hub profile: https://hub.docker.com/u/borntowhine
