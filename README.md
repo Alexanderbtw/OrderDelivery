@@ -1,7 +1,7 @@
 # :mag: Run in Docker (Recommended)
-1. Download Docker and docker-compose
+1. Download and open Docker and docker-compose
 2. Download docker-compose.yml from **/Finally folder**
-3. Run command:
+3. Run command in directory with docker-compose.yml:
 ```
 docker-compose up
 ```
