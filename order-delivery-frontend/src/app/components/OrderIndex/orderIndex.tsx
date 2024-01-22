@@ -3,7 +3,7 @@
 import { getAllOrders } from "@/app/services/orders";
 import { Table } from "antd";
 import { useRouter } from "next/navigation";
-import { FunctionComponent, useEffect, useReducer, useState } from "react";
+import { FunctionComponent, useEffect, useReducer } from "react";
 import { ordersReducer, initialState } from "./orderIndexReducer";
 
 const colsInfo = [

@@ -1,8 +1,9 @@
 ﻿"use client";
 
-import { GetOrder, getSingleOrder } from "@/app/services/orders";
+import { getSingleOrder } from "@/app/services/orders";
 import { Descriptions, Spin } from "antd";
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useEffect, useReducer } from "react";
+import { initialState, orderReducer } from "./orderReadReducer";
 
 interface Props {
   orderId: string
@@ -11,18 +12,13 @@ interface Props {
 export const OrderRead : FunctionComponent<Props> = ({
   orderId
 }) => {
-  const [orderInfo, setOrder] = useState<GetOrder>({});
-  const [isLoading, setLoading] = useState<boolean>(true);
+  const [state, dispatch] = useReducer(orderReducer, initialState);
 
   useEffect(() => {
-    getSingleOrder(orderId)
-      .then((order: GetOrder) => {
-        setOrder(order);
-        setLoading(false);
-      });
+    getSingleOrder(orderId).then((order) => { dispatch(order) });
   }, [orderId]);
 
-  if (isLoading){
+  if (state.isLoading){
     return (
       <div style={{textAlign: "center", marginTop: "40px"}}>
         <Spin/>
@@ -30,12 +26,12 @@ export const OrderRead : FunctionComponent<Props> = ({
     );
   }
 
-  if (orderInfo?.error) {
-    throw orderInfo.error;
+  if (state.error) {
+    throw state.error;
   }
 
-  const descItems = Object.keys(orderInfo.data!).map(key => {
-    let value = orderInfo.data![key as keyof Order].toString();
+  const descItems = Object.keys(state.orderInfo!).map(key => {
+    let value = state.orderInfo![key as keyof Order].toString();
 
     if (key == 'weight') {
       value += " Kg"

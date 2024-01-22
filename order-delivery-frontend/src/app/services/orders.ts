@@ -1,4 +1,5 @@
 ﻿import { ORDERS_ACTIONS_TYPES, OrdersAction } from "../components/OrderIndex/orderIndexReducer";
+import { ORDER_ACTIONS_TYPES, OrderAction } from "../components/OrderRead/orderReadReducer";
 
 const BASE_URL = 'http://localhost:8085/api/';
 
@@ -21,11 +22,6 @@ interface CreateOrderResponse {
 
 export interface CreateOrderInfo {
     orderId?: string,
-    error?: unknown
-}
-
-export interface GetOrder {
-    data?: Order,
     error?: unknown
 }
 
@@ -56,19 +52,29 @@ export const getAllOrders = async () : Promise<OrdersAction> => {
     }
 }
 
-export const getSingleOrder = async (id: string) : Promise<GetOrder> => {
+export const getSingleOrder = async (id: string) : Promise<OrderAction> => {
     try {
         const response = await fetch(BASE_URL + 'Order/' + id);
         if (response.ok) {
             return {
-                data: await response.json()
+                type: ORDER_ACTIONS_TYPES.orderLoadingSuccess,
+                payload: {
+                    orderInfo: await response.json(),
+                    error: null,
+                    isLoading: false
+                }
             }
         } else {
             throw new Error(`Error ${response.status} occured on the server`);
         }
     } catch (err) {
         return {
-            error: err
+            type: ORDERS_ACTIONS_TYPES.ordersLoadingError,
+            payload: {
+                orderInfo: null,
+                error: err,
+                isLoading: false
+            }
         }
     }
 }

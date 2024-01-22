@@ -4,7 +4,7 @@
   ordersLoadingSuccess: "ordersLoadingSuccess",
 }
 
-export interface State {
+interface State {
   ordersInfo: Order[],
   isLoading: boolean,
   error: unknown
@@ -21,7 +21,7 @@ export const initialState: State = {
   error: undefined
 }
 
-export const ordersReducer = (state: State, action: OrdersAction) => {
+export const ordersReducer = (state: State, action: OrdersAction) : State => {
   switch (action?.type) {
     case ORDERS_ACTIONS_TYPES.ordersLoading:
       return { ...state, isLoading: true }
