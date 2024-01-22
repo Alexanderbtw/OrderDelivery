@@ -56,8 +56,8 @@ export const SenderStep: FunctionComponent<FormDataProps> = ({
         senderCity: cityText,
       });
       form.setFieldsValue({
-        senderCity: adressText,
-        senderAddress: cityText,
+        senderAddress: adressText,
+        senderCity: cityText,
       });
     } catch (error) {
       console.error("Error:", error);

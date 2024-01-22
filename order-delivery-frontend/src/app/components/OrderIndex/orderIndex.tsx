@@ -1,9 +1,10 @@
 ﻿"use client";
 
-import { GetOrders, getAllOrders } from "@/app/services/orders";
+import { getAllOrders } from "@/app/services/orders";
 import { Table } from "antd";
 import { useRouter } from "next/navigation";
-import { FunctionComponent, useEffect, useRef, useState } from "react";
+import { FunctionComponent, useEffect, useReducer, useState } from "react";
+import { ordersReducer, initialState } from "./orderIndexReducer";
 
 const colsInfo = [
   {
@@ -51,28 +52,22 @@ const colsInfo = [
 ];
 
 export const OrderIndex:FunctionComponent = ({}) => {
-  const [ordersInfo, setOrders] = useState<GetOrders>({});
-  const isLoading = useRef<boolean>(true);
-
+  const [state, dispatch] = useReducer(ordersReducer, initialState);
   const router = useRouter();
 
   useEffect(() => {
-    getAllOrders()
-      .then((orders: GetOrders) => {
-        setOrders(orders);
-        isLoading.current = false;
-      })
+    getAllOrders().then(res => dispatch(res));
   }, []);
 
-  if (ordersInfo?.error) {
-    throw ordersInfo.error;
+  if (state.error) {
+    throw state.error;
   }
 
   return (
     <Table
-      dataSource={ordersInfo.data ? ordersInfo.data.map(item => ({...item, key: item.id})) : []}
+      dataSource={state.ordersInfo ? state.ordersInfo.map(item => ({...item, key: item.id})) : []}
       columns={colsInfo}
-      loading={isLoading.current}
+      loading={state.isLoading}
       onRow={(record) => {
         return {
             onClick: () => router.push('/order/read/' + record.id)

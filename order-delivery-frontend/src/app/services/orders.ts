@@ -1,4 +1,6 @@
-﻿const BASE_URL = 'http://localhost:8085/api/';
+﻿import { ORDERS_ACTIONS_TYPES, OrdersAction } from "../components/OrderIndex/orderIndexReducer";
+
+const BASE_URL = 'http://localhost:8085/api/';
 
 export interface CreateOrderCommand {
     senderCity: string,
@@ -22,29 +24,34 @@ export interface CreateOrderInfo {
     error?: unknown
 }
 
-export interface GetOrders {
-    data?: Order[],
-    error?: unknown
-}
-
 export interface GetOrder {
     data?: Order,
     error?: unknown
 }
 
-export const getAllOrders = async () : Promise<GetOrders> => {
+export const getAllOrders = async () : Promise<OrdersAction> => {
     try {
         const response = await fetch(BASE_URL + 'Order/GetAll');
         if (response.ok) {
             return {
-                data: await response.json()
+                type: ORDERS_ACTIONS_TYPES.ordersLoadingSuccess,
+                payload: {
+                    ordersInfo: await response.json(),
+                    isLoading: false,
+                    error: undefined
+                }
             }
         } else {
             throw new Error(`Error ${response.status} occured on the server`);
         }
     } catch (err) {
         return {
-            error: err
+            type: ORDERS_ACTIONS_TYPES.ordersLoadingError,
+            payload: {
+                ordersInfo: [],
+                isLoading: false,
+                error: err
+            }
         }
     }
 }

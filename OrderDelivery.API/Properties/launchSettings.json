@@ -13,7 +13,7 @@
         "DB_PORT": "5432"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5170"
+      "applicationUrl": "http://localhost:8085"
     },
     "Docker": {
       "commandName": "Docker",
